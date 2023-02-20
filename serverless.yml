@@ -4,6 +4,19 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs18.x
+  environment:
+      STAGE: ${sls:stage}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:BatchGetItem
+        - dynamodb:DeleteItem
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:Query
+        - dynamodb:UpdateItem
+        - dynamodb:Scan
+      Resource: "arn:aws:dynamodb:${aws:region}:*:table/*"
 
 functions:
   api:
@@ -12,3 +25,21 @@ functions:
       - httpApi:
           path: /
           method: get
+
+resources:
+  Resources:
+    CourseTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ubc-course-sub-${sls:stage}-course
+        AttributeDefinitions:
+          - AttributeName: courseId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: courseId
+            KeyType: HASH
+        BillingMode: PROVISIONED
+        ProvisionedThroughput:
+          ReadCapacityUnits: 2
+          WriteCapacityUnits: 2
+
