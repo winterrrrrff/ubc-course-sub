@@ -6,6 +6,7 @@ const command = new ScanCommand(input);
 
 export const handler = async (event) => {
     const response = await client.send(command);
+    
     return {
         statusCode: 200,
         body: JSON.stringify(
