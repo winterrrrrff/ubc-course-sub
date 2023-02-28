@@ -35,6 +35,18 @@ functions:
       - httpApi:
           path: /api/refresh
           method: get
+  subscribe:
+    handler: Handlers/SubscribeHandler.subscribeHandler
+    events:
+      - httpApi:
+          path: /api/subscribe
+          method: post
+  unsubscribe:
+    handler: Handlers/UnsubscribeHandler.unsubscribeHandler
+    events:
+      - httpApi:
+          path: /api/unsubscribe/{userEmail}/{courseId}
+          method: delete
 
 resources:
   Resources:

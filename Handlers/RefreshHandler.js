@@ -8,6 +8,7 @@ everytime we refresh, we fetch all the active courses, and check if the total se
 import {DynamoDBClient, ScanCommand, UpdateItemCommand} from "@aws-sdk/client-dynamodb";
 import {marshall} from "@aws-sdk/util-dynamodb";
 import {parse} from 'node-html-parser';
+import {notify} from "./NotifyHandler.js";
 
 const client = new DynamoDBClient({});
 const input = {TableName: `ubc-course-sub-${process.env.STAGE}-seats-remaining`};
@@ -22,6 +23,9 @@ export const refreshHandler = async (event) => {
         const prevSeatsRemaining = course.prevSeatsRemaining.N;
         if (currSeatsRemaining < prevSeatsRemaining) { // update prevSeatsRemaining to currSeatsRemaining
             await updateOnLowSeatsRemaining(course.courseId.S, currSeatsRemaining);
+        } else if (currSeatsRemaining > prevSeatsRemaining) {
+            await updateOnLowSeatsRemaining(course.courseId.S, currSeatsRemaining);
+            await notify(course.courseId.S, currSeatsRemaining);
         }
         response[course.courseId.S] = `prev: ${prevSeatsRemaining} and cur: ${currSeatsRemaining} and compare: ${currSeatsRemaining < prevSeatsRemaining}`;
     }
