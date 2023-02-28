@@ -1,0 +1,8 @@
+{
+  "Template": {
+    "TemplateName": "Notification_of_Available_Course_Seat",
+    "SubjectPart": "REMINDER: Available Course Seat for {{course_name}}",
+    "HtmlPart": "<h1>Notification of Available Course Seat</h1>\n<p>Hello {{student_name}},</p>\n<p>We are writing to let you know that a spot has become available in the {{course_name}} that you have been monitoring through our seat-remaining service. We wanted to notify you as soon as possible so that you have the opportunity to register for the course before the spot is taken.</p><p>As a reminder, our seat-remaining notification service is designed to help you stay informed about the availability of courses that you are interested in. When a seat becomes available, we send an email notification to let you know.</p><p>If you would like to register for the {{course_name}} now that a spot has become available, please do so as soon as possible to secure your place. If you have any questions or need help with the registration process, please don't hesitate to contact us.</p><p>Thank you for using our seat-remaining service, and we hope that you enjoy your course!</p><table><tr><th>Course</th><th>Section</th><th>Academic Year</th><th>Total Seat Remaining</th></tr><tr><td>{{course_name}}</td><td>{{section}}</td><td>{{year}}</td><td>{{remaining_seat}}</td></tr></table><p>Best regards,</p>"
+  }
+}
+

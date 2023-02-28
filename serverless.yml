@@ -16,7 +16,11 @@ provider:
         - dynamodb:Query
         - dynamodb:UpdateItem
         - dynamodb:Scan
-      Resource: "arn:aws:dynamodb:${aws:region}:*:table/*"
+        - ses:SendTemplatedEmail
+      Resource:
+        - "arn:aws:dynamodb:${aws:region}:*:table/*"
+        - "arn:aws:ses:${aws:region}:*:identity/*"
+        - "arn:aws:ses:${aws:region}:*:template/*"
 
 functions:
   test:
